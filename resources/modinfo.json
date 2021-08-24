@@ -1,0 +1,14 @@
+{
+	"type": "code",
+	"name": "TemporalProspector",
+	"modid": "temporalprospector",
+	"version": "0.0.1",
+	
+	"description" : "An example mod using VS Code and .NET",
+	"website": "https://github.com/copygirl/howto-example-mod",
+	"authors": [ "AlexDGr8r" ],
+	
+	"dependencies": {
+		"game": ""
+	}
+}

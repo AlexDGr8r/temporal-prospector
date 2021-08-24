@@ -1,0 +1,26 @@
+{
+  ingredientPattern: "TNP",
+  ingredients: {
+    "T": { 
+      type: "item", 
+      code: "game:gear-temporal"
+    },
+    "N": {
+      type: "item",
+      code: "game:nugget-*",
+      name: "nugget"
+    },
+    "P": {
+      type: "item",
+      code: "game:prospectingpick-*",
+      name: "pick"
+    }
+  },
+  width: 1,
+  height: 3,
+  output: { 
+    type: "item", 
+    code: "temporalprospectingpick-{pick}-{nugget}", 
+    quantity: 1
+  }
+}
