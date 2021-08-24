@@ -37,7 +37,7 @@
       ]
     },
     {
-      code: "nugget",
+      code: "resource",
       states: [
         "bismuthinite",
         "cassiterite",
@@ -57,7 +57,24 @@
         "rhodochrosite",
         "sphalerite",
         "uranium",
-        "wolframite"
+        "wolframite",
+        "diamond",
+        "emerald",
+        "olivine_peridot",
+        "alum",
+        "lapislazuli",
+        "corundum",
+        "anthracite",
+        "borax",
+        "lignite",
+        "bituminouscoal",
+        "sylvite",
+        "quartz",
+        "olivine",
+        "sulfur",
+        "fluorite",
+        "kernite",
+        "phosphorite"
       ]
     }
   ],
@@ -71,6 +88,193 @@
   },
   heldTpHitAnimation: "breaktool",
   texturesByType: {
+    "*-diamond": {
+      "metal": {
+        base: "game:block/metal/ingot/{metal}"
+      },
+      "handle": {
+        base: "game:item/tool/material/wood"
+      },
+      "nugget": {
+        base: "game:block/stone/gem/{resource}"
+      }
+    },
+    "*-emerald": {
+      "metal": {
+        base: "game:block/metal/ingot/{metal}"
+      },
+      "handle": {
+        base: "game:item/tool/material/wood"
+      },
+      "nugget": {
+        base: "game:block/stone/gem/{resource}"
+      }
+    },
+    "*-olivine_peridot": {
+      "metal": {
+        base: "game:block/metal/ingot/{metal}"
+      },
+      "handle": {
+        base: "game:item/tool/material/wood"
+      },
+      "nugget": {
+        base: "game:block/stone/gem/olivine"
+      }
+    },
+    "*-alum": {
+      "metal": {
+        base: "game:block/metal/ingot/{metal}"
+      },
+      "handle": {
+        base: "game:item/tool/material/wood"
+      },
+      "nugget": {
+        base: "game:item/resource/ungraded/borax"
+      }
+    },
+    "*-lapislazuli": {
+      "metal": {
+        base: "game:block/metal/ingot/{metal}"
+      },
+      "handle": {
+        base: "game:item/tool/material/wood"
+      },
+      "nugget": {
+        base: "game:item/resource/ungraded/{resource}"
+      }
+    },
+    "*-corundum": {
+      "metal": {
+        base: "game:block/metal/ingot/{metal}"
+      },
+      "handle": {
+        base: "game:item/tool/material/wood"
+      },
+      "nugget": {
+        base: "game:item/resource/ungraded/{resource}"
+      }
+    },
+    "*-anthracite": {
+      "metal": {
+        base: "game:block/metal/ingot/{metal}"
+      },
+      "handle": {
+        base: "game:item/tool/material/wood"
+      },
+      "nugget": {
+        base: "game:item/resource/ungraded/{resource}"
+      }
+    },
+    "*-borax": {
+      "metal": {
+        base: "game:block/metal/ingot/{metal}"
+      },
+      "handle": {
+        base: "game:item/tool/material/wood"
+      },
+      "nugget": {
+        base: "game:item/resource/ungraded/{resource}"
+      }
+    },
+    "*-lignite": {
+      "metal": {
+        base: "game:block/metal/ingot/{metal}"
+      },
+      "handle": {
+        base: "game:item/tool/material/wood"
+      },
+      "nugget": {
+        base: "game:item/resource/ungraded/{resource}"
+      }
+    },
+    "*-bituminouscoal": {
+      "metal": {
+        base: "game:block/metal/ingot/{metal}"
+      },
+      "handle": {
+        base: "game:item/tool/material/wood"
+      },
+      "nugget": {
+        base: "game:item/resource/ungraded/{resource}"
+      }
+    },
+    "*-sylvite": {
+      "metal": {
+        base: "game:block/metal/ingot/{metal}"
+      },
+      "handle": {
+        base: "game:item/tool/material/wood"
+      },
+      "nugget": {
+        base: "game:item/resource/ungraded/{resource}"
+      }
+    },
+    "*-quartz": {
+      "metal": {
+        base: "game:block/metal/ingot/{metal}"
+      },
+      "handle": {
+        base: "game:item/tool/material/wood"
+      },
+      "nugget": {
+        base: "game:item/resource/ungraded/{resource}"
+      }
+    },
+    "*-olivine": {
+      "metal": {
+        base: "game:block/metal/ingot/{metal}"
+      },
+      "handle": {
+        base: "game:item/tool/material/wood"
+      },
+      "nugget": {
+        base: "game:item/resource/ungraded/{resource}"
+      }
+    },
+    "*-sulfur": {
+      "metal": {
+        base: "game:block/metal/ingot/{metal}"
+      },
+      "handle": {
+        base: "game:item/tool/material/wood"
+      },
+      "nugget": {
+        base: "game:item/resource/ungraded/{resource}"
+      }
+    },
+    "*-fluorite": {
+      "metal": {
+        base: "game:block/metal/ingot/{metal}"
+      },
+      "handle": {
+        base: "game:item/tool/material/wood"
+      },
+      "nugget": {
+        base: "game:item/resource/ungraded/{resource}"
+      }
+    },
+    "*-kernite": {
+      "metal": {
+        base: "game:block/metal/ingot/{metal}"
+      },
+      "handle": {
+        base: "game:item/tool/material/wood"
+      },
+      "nugget": {
+        base: "game:item/resource/ungraded/{resource}"
+      }
+    },
+    "*-phosphorite": {
+      "metal": {
+        base: "game:block/metal/ingot/{metal}"
+      },
+      "handle": {
+        base: "game:item/tool/material/wood"
+      },
+      "nugget": {
+        base: "game:item/resource/ungraded/{resource}"
+      }
+    },
     "*": {
       "metal": {
         base: "game:block/metal/ingot/{metal}"
@@ -79,7 +283,7 @@
         base: "game:item/tool/material/wood"
       },
       "nugget": {
-        base: "game:item/resource/nugget/{nugget}"
+        base: "game:item/resource/nugget/{resource}"
       }
     }
   },

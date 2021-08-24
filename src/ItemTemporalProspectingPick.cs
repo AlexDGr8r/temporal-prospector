@@ -140,7 +140,7 @@ namespace TemporalProspector
             }
 
             BlockPos blockPos = blockSel.Position.Copy();
-            string oreType = Variant["nugget"];
+            string resourceType = Variant["resource"];
             int numFound = 0;
 
             api.World.BlockAccessor.WalkBlocks(blockPos.AddCopy(radius, radius, radius),
@@ -149,7 +149,7 @@ namespace TemporalProspector
                 {
                     if (nblock.BlockMaterial == EnumBlockMaterial.Ore && nblock.Variant.ContainsKey("type"))
                     {
-                        if (nblock.Variant["type"].ToLower().Contains(oreType))
+                        if (nblock.Variant["type"].ToLower().Contains(resourceType))
                         {
                             numFound++;
                             SpawnParticles(world, blockPos.ToVec3d().Add(0.5D, 0.5D, 0.5D),
@@ -159,7 +159,7 @@ namespace TemporalProspector
                 });
 
             serverPlayer.SendMessage(GlobalConstants.GeneralChatGroup,
-                "Found " + numFound + " " + oreType + " nodes within " + radius + " blocks", EnumChatType.Notification);
+                "Found " + numFound + " " + resourceType + " nodes within " + radius + " blocks", EnumChatType.Notification);
         }
         
         private void SpawnParticles(IWorldAccessor world, Vec3d pos, Vec3d endPos)
