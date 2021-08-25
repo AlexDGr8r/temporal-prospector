@@ -94,9 +94,15 @@ namespace TemporalProspector
         {
             foreach (var iSlot in allInputslots)
             {
-                if (iSlot?.Itemstack?.Item is ItemProspectingPick)
+                if (iSlot.Itemstack?.Item is ItemProspectingPick)
                 {
-                    outputSlot.Itemstack.Attributes.SetInt("durability", iSlot.Itemstack.Attributes.GetInt("durability"));
+                    var durability = iSlot.Itemstack.Attributes.GetInt("durability");
+                    if (durability > 0)
+                    {
+                        outputSlot.Itemstack.Attributes.SetInt("durability", durability);
+                    }
+                    
+                    break;
                 }
             }
         }

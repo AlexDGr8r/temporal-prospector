@@ -1,7 +1,7 @@
 ﻿{
-  code: "temporalprospectingpick",
+  code: "temporalprospectingpick-gem",
   storageFlags: 5,
-  class: "ItemTemporalProspectingPick",
+  class: "ItemTemporalProspectingPickGem",
   attributes: {
     handbook: {
       groupBy: [
@@ -39,25 +39,9 @@
     {
       code: "resource",
       states: [
-        "bismuthinite",
-        "cassiterite",
-        "chromite",
-        "cinnabar",
-        "galena",
-        "graphite",
-        "hematite",
-        "ilmenite",
-        "limonite",
-        "magnetite",
-        "malachite",
-        "nativecopper",
-        "nativegold",
-        "nativesilver",
-        "pentlandite",
-        "rhodochrosite",
-        "sphalerite",
-        "uranium",
-        "wolframite"
+        "diamond",
+        "emerald",
+        "olivine_peridot"
       ]
     }
   ],
@@ -71,6 +55,17 @@
   },
   heldTpHitAnimation: "breaktool",
   texturesByType: {
+    "*-olivine_peridot": {
+      "metal": {
+        base: "game:block/metal/ingot/{metal}"
+      },
+      "handle": {
+        base: "game:item/tool/material/wood"
+      },
+      "nugget": {
+        base: "game:block/stone/gem/olivine"
+      }
+    },
     "*": {
       "metal": {
         base: "game:block/metal/ingot/{metal}"
@@ -79,7 +74,7 @@
         base: "game:item/tool/material/wood"
       },
       "nugget": {
-        base: "game:item/resource/nugget/{resource}"
+        base: "game:block/stone/gem/{resource}"
       }
     }
   },
@@ -96,66 +91,66 @@
     "*-steel-*": 5
   },
   miningspeedbytype: {
-    "temporalprospectingpick-copper-*": {
+    "temporalprospectingpick-gem-copper-*": {
       "stone": 2.5,
       "ore": 2.5
     },
-    "temporalprospectingpick-bismuthbronze-*": {
+    "temporalprospectingpick-gem-bismuthbronze-*": {
       "stone": 3,
       "ore": 3
     },
-    "temporalprospectingpick-tinbronze-*": {
+    "temporalprospectingpick-gem-tinbronze-*": {
       "stone": 3.3,
       "ore": 3.3
     },
-    "temporalprospectingpick-gold-*": {
+    "temporalprospectingpick-gem-gold-*": {
       "stone": 2.7,
       "ore": 2.7
     },
-    "temporalprospectingpick-silver-*": {
+    "temporalprospectingpick-gem-silver-*": {
       "stone": 2.7,
       "ore": 2.7
     },
-    "temporalprospectingpick-blackbronze-*": {
+    "temporalprospectingpick-gem-blackbronze-*": {
       "stone": 3.5,
       "ore": 3.5
     },
-    "temporalprospectingpick-iron-*": {
+    "temporalprospectingpick-gem-iron-*": {
       "stone": 4.5,
       "ore": 4.5,
       "metal": 4.5
     },
-    "temporalprospectingpick-meteoriciron-*": {
+    "temporalprospectingpick-gem-meteoriciron-*": {
       "stone": 4.75,
       "ore": 4.75,
       "metal": 4.75
     },
-    "temporalprospectingpick-steel-*": {
+    "temporalprospectingpick-gem-steel-*": {
       "stone": 5.5,
       "ore": 5.5
     }
   },
   attackpowerbytype: {
-    "temporalprospectingpick-copper-*": 1.25,
-    "temporalprospectingpick-bismuthbronze-*": 1.5,
-    "temporalprospectingpick-tinbronze-*": 1.75,
-    "temporalprospectingpick-gold-*": 1.75,
-    "temporalprospectingpick-silver-*": 1.75,
-    "temporalprospectingpick-blackbronze-*": 2,
-    "temporalprospectingpick-iron-*": 2.25,
-    "temporalprospectingpick-meteoriciron-*": 2.35,
-    "temporalprospectingpick-steel-*": 2.5
+    "temporalprospectingpick-gem-copper-*": 1.25,
+    "temporalprospectingpick-gem-bismuthbronze-*": 1.5,
+    "temporalprospectingpick-gem-tinbronze-*": 1.75,
+    "temporalprospectingpick-gem-gold-*": 1.75,
+    "temporalprospectingpick-gem-silver-*": 1.75,
+    "temporalprospectingpick-gem-blackbronze-*": 2,
+    "temporalprospectingpick-gem-iron-*": 2.25,
+    "temporalprospectingpick-gem-meteoriciron-*": 2.35,
+    "temporalprospectingpick-gem-steel-*": 2.5
   },
   durabilitybytype: {
-    "temporalprospectingpick-gold-*": 60,
-    "temporalprospectingpick-silver-*": 80,
-    "temporalprospectingpick-copper-*": 150,
-    "temporalprospectingpick-tinbronze-*": 250,
-    "temporalprospectingpick-bismuthbronze-*": 300,
-    "temporalprospectingpick-blackbronze-*": 350,
-    "temporalprospectingpick-iron-*": 650,
-    "temporalprospectingpick-meteoriciron-*": 900,
-    "temporalprospectingpick-steel-*": 1625
+    "temporalprospectingpick-gem-gold-*": 60,
+    "temporalprospectingpick-gem-silver-*": 80,
+    "temporalprospectingpick-gem-copper-*": 150,
+    "temporalprospectingpick-gem-tinbronze-*": 250,
+    "temporalprospectingpick-gem-bismuthbronze-*": 300,
+    "temporalprospectingpick-gem-blackbronze-*": 350,
+    "temporalprospectingpick-gem-iron-*": 650,
+    "temporalprospectingpick-gem-meteoriciron-*": 900,
+    "temporalprospectingpick-gem-steel-*": 1625
   },
   creativeinventory: {
     "general": [

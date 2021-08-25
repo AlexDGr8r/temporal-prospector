@@ -13,11 +13,8 @@ namespace TemporalProspector
 		public override void Start(ICoreAPI api)
 		{
 			api.RegisterItemClass("ItemTemporalProspectingPick", typeof(ItemTemporalProspectingPick));
-		}
-
-		public override void StartServerSide(ICoreServerAPI api)
-		{
-			base.StartServerSide(api);
+			api.RegisterItemClass("ItemTemporalProspectingPickGem", typeof(ItemTemporalProspectingPick));
+			api.RegisterItemClass("ItemTemporalProspectingPickUngraded", typeof(ItemTemporalProspectingPick));
 		}
 	}
 }

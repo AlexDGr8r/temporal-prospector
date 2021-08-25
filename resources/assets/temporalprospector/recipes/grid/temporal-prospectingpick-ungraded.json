@@ -1,0 +1,43 @@
+{
+  ingredientPattern: "TUP",
+  ingredients: {
+    "T": {
+      type: "item",
+      code: "game:gear-temporal"
+    },
+    "U": {
+      type: "item",
+      code: "game:ore-*",
+      name: "ungraded",
+      quantity: 4,
+      allowedVariants: [
+        "alum",
+        "lapislazuli",
+        "corundum",
+        "anthracite",
+        "borax",
+        "lignite",
+        "bituminouscoal",
+        "sylvite",
+        "quartz",
+        "olivine",
+        "sulfur",
+        "fluorite",
+        "kernite",
+        "phosphorite"
+      ]
+    },
+    "P": {
+      type: "item",
+      code: "game:prospectingpick-*",
+      name: "pick"
+    }
+  },
+  width: 1,
+  height: 3,
+  output: {
+    type: "item",
+    code: "temporalprospectingpick-ungraded-{pick}-{ungraded}",
+    quantity: 1
+  }
+}
