@@ -2,7 +2,7 @@
 	"type": "code",
 	"name": "TemporalProspector",
 	"modid": "temporalprospector",
-	"version": "0.0.1",
+	"version": "1.0.0",
 	"description" : "Temporally prospect the resources of the world",
 	"website": "https://github.com/AlexDGr8r/temporal-prospector",
 	"authors": [ "AlexDGr8r" ],
