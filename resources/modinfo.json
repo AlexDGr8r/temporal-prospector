@@ -3,11 +3,9 @@
 	"name": "TemporalProspector",
 	"modid": "temporalprospector",
 	"version": "0.0.1",
-	
-	"description" : "An example mod using VS Code and .NET",
-	"website": "https://github.com/copygirl/howto-example-mod",
+	"description" : "Temporally prospect the resources of the world",
+	"website": "https://github.com/AlexDGr8r/temporal-prospector",
 	"authors": [ "AlexDGr8r" ],
-	
 	"dependencies": {
 		"game": ""
 	}

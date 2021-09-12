@@ -8,9 +8,9 @@
 	"textures": {
 		"string": "game:item/tool/material/string",
 		"metal": "game:block/metal/ingot/copper",
-		"handle": "game:item/tool/material/handle",
+		"handle": "game:item/tool/material/wood",
 		"temporal": "game:item/resource/temporalgear",
-		"nugget": "game:block/metal/ingot/copper"
+		"nugget": "game:item/resource/temporalgear"
 	},
 	"elements": [
 		{

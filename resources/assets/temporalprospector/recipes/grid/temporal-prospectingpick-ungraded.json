@@ -1,43 +1,83 @@
-{
-  ingredientPattern: "TUP",
-  ingredients: {
-    "T": {
-      type: "item",
-      code: "game:gear-temporal"
+[
+  {
+    ingredientPattern: "TUP",
+    ingredients: {
+      "T": {
+        type: "item",
+        code: "game:gear-temporal"
+      },
+      "U": {
+        type: "item",
+        code: "game:ore-*",
+        quantity: 4,
+        allowedVariants: [
+          "alum",
+          "lapislazuli",
+          "corundum",
+          "anthracite",
+          "borax",
+          "lignite",
+          "bituminouscoal",
+          "sylvite",
+          "quartz",
+          "olivine",
+          "sulfur",
+          "fluorite",
+          "kernite",
+          "phosphorite"
+        ]
+      },
+      "P": {
+        type: "item",
+        code: "game:prospectingpick-*",
+        name: "pick"
+      }
     },
-    "U": {
+    width: 1,
+    height: 3,
+    output: {
       type: "item",
-      code: "game:ore-*",
-      name: "ungraded",
-      quantity: 4,
-      allowedVariants: [
-        "alum",
-        "lapislazuli",
-        "corundum",
-        "anthracite",
-        "borax",
-        "lignite",
-        "bituminouscoal",
-        "sylvite",
-        "quartz",
-        "olivine",
-        "sulfur",
-        "fluorite",
-        "kernite",
-        "phosphorite"
-      ]
-    },
-    "P": {
-      type: "item",
-      code: "game:prospectingpick-*",
-      name: "pick"
+      code: "temporalprospectingpick-{pick}",
+      quantity: 1
     }
   },
-  width: 1,
-  height: 3,
-  output: {
-    type: "item",
-    code: "temporalprospectingpick-ungraded-{pick}-{ungraded}",
-    quantity: 1
+  {
+    ingredientPattern: "UP",
+    ingredients: {
+      "U": {
+        type: "item",
+        code: "game:ore-*",
+        quantity: 4,
+        allowedVariants: [
+          "alum",
+          "lapislazuli",
+          "corundum",
+          "anthracite",
+          "borax",
+          "lignite",
+          "bituminouscoal",
+          "sylvite",
+          "quartz",
+          "olivine",
+          "sulfur",
+          "fluorite",
+          "kernite",
+          "phosphorite"
+        ]
+      },
+      "P": {
+        type: "item",
+        code: "temporalprospectingpick-*",
+        name: "pick"
+      }
+    },
+    width: 1,
+    height: 2,
+    shapeless: true,
+    output: {
+      type: "item",
+      code: "temporalprospectingpick-{pick}",
+      quantity: 1
+    }
   }
-}
+]

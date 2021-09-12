@@ -1,27 +1,51 @@
-{
-  ingredientPattern: "TNP",
-  ingredients: {
-    "T": {
-      type: "item",
-      code: "game:gear-temporal"
+[
+  {
+    ingredientPattern: "TNP",
+    ingredients: {
+      "T": {
+        type: "item",
+        code: "game:gear-temporal"
+      },
+      "N": {
+        type: "item",
+        code: "game:nugget-*",
+        quantity: 10
+      },
+      "P": {
+        type: "item",
+        code: "game:prospectingpick-*",
+        name: "pick"
+      }
     },
-    "N": {
+    width: 1,
+    height: 3,
+    output: {
       type: "item",
-      code: "game:nugget-*",
-      name: "nugget",
-      quantity: 10
-    },
-    "P": {
-      type: "item",
-      code: "game:prospectingpick-*",
-      name: "pick"
+      code: "temporalprospectingpick-{pick}",
+      quantity: 1
     }
   },
-  width: 1,
-  height: 3,
-  output: {
-    type: "item",
-    code: "temporalprospectingpick-{pick}-{nugget}",
-    quantity: 1
+  {
+    ingredientPattern: "NP",
+    ingredients: {
+      "N": {
+        type: "item",
+        code: "game:nugget-*",
+        quantity: 10
+      },
+      "P": {
+        type: "item",
+        code: "temporalprospectingpick-*",
+        name: "pick"
+      }
+    },
+    width: 1,
+    height: 2,
+    shapeless: true,
+    output: {
+      type: "item",
+      code: "temporalprospectingpick-{pick}",
+      quantity: 1
+    }
   }
-}
+]

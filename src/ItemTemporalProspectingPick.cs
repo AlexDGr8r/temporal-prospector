@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 using Cairo;
 using Vintagestory.API.Client;
 using Vintagestory.API.Common;
@@ -13,6 +15,8 @@ namespace TemporalProspector
 {
     public class ItemTemporalProspectingPick : Item
     {
+
+        private const string RESOURCE_TAG = "resource";
 
         private SimpleParticleProperties _particlesHeld;
         private SkillItem[] _toolModes;
@@ -79,8 +83,21 @@ namespace TemporalProspector
                     radius = 60;
                     break;
             }
-            
-            ProspectArea(world, byEntity, blockSel, radius);
+
+            string resource = itemslot.Itemstack.Attributes.GetString(RESOURCE_TAG);
+            if (resource != null)
+            {
+                ProspectArea(world, byEntity, blockSel, radius, resource);
+            }
+            else if (byEntity is EntityPlayer player)
+            {
+                var byPlayer = world.PlayerByUid(player.PlayerUID);
+                if (byPlayer is IServerPlayer serverPlayer)
+                {
+                    serverPlayer.SendMessage(GlobalConstants.GeneralChatGroup, 
+                        Lang.Get("temporalprospector:no-resource-selected"), EnumChatType.Notification);
+                }
+            }
 
             if (DamagedBy != null && DamagedBy.Contains(EnumItemDamageSource.BlockBreaking))
             {
@@ -94,19 +111,95 @@ namespace TemporalProspector
         {
             foreach (var iSlot in allInputslots)
             {
-                if (iSlot.Itemstack?.Item is ItemProspectingPick)
+                switch (iSlot.Itemstack?.Item)
                 {
-                    var durability = iSlot.Itemstack.Attributes.GetInt("durability");
-                    if (durability > 0)
-                    {
-                        outputSlot.Itemstack.Attributes.SetInt("durability", durability);
-                    }
-                    
-                    break;
+                    case ItemProspectingPick _:
+                    case ItemTemporalProspectingPick _:
+                        var durability = iSlot.Itemstack.Attributes.GetInt("durability");
+                        if (durability > 0)
+                        {
+                            outputSlot.Itemstack.Attributes.SetInt("durability", durability);
+                        }
+                        break;
+                    case ItemNugget _:
+                    case ItemOre _:
+                    case ItemGem _:
+                        outputSlot.Itemstack.Attributes.SetString(RESOURCE_TAG, iSlot.Itemstack.Item.Variant["ore"]);
+                        break;
                 }
             }
         }
-        
+
+        public override string GetHeldItemName(ItemStack itemStack)
+        {
+            var resource = itemStack.Attributes.GetString(RESOURCE_TAG, "none");
+            return Lang.GetMatching(Code?.Domain + ":" + ItemClass.Name() + "-" + Code?.Path + "-" + resource);
+        }
+
+        public override void GetHeldItemInfo(ItemSlot inSlot, StringBuilder dsc, IWorldAccessor world, bool withDebugInfo)
+        {
+            // Simply copied from base method, but stripped down slightly for some stuff that is not necessary
+            // This is purely so that we can create our own custom item description based on item attributes
+            ItemStack itemstack = inSlot.Itemstack;
+            string key = Code?.Domain + ":" + ItemClass.ToString().ToLowerInvariant() + "desc-" +
+                         Code?.Path + "-" + itemstack.Attributes.GetString(RESOURCE_TAG, "none");
+            string matching = Lang.GetMatching(key);
+            string str1 = matching != key ? matching + "\n" : "";
+            StringBuilder stringBuilder1 = dsc;
+            int num1;
+            string str2;
+            if (!withDebugInfo)
+            {
+                str2 = "";
+            }
+            else
+            {
+                num1 = Id;
+                str2 = "Id: " + num1 + "\n";
+            }
+
+            stringBuilder1.Append(str2);
+            dsc.Append(withDebugInfo ? "Code: " + Code + "\n" : "");
+            int durability = GetDurability(itemstack);
+            if (durability > 1)
+                dsc.AppendLine(Lang.Get("Durability: {0} / {1}",
+                    itemstack.Attributes.GetInt("durability", durability), durability));
+            if (MiningSpeed != null && MiningSpeed.Count > 0)
+            {
+                dsc.AppendLine(Lang.Get("Tool Tier: {0}", ToolTier));
+                dsc.Append(Lang.Get("item-tooltip-miningspeed"));
+                int num2 = 0;
+                foreach (KeyValuePair<EnumBlockMaterial, float> keyValuePair in MiningSpeed)
+                {
+                    if (keyValuePair.Value >= 1.1)
+                    {
+                        if (num2 > 0)
+                            dsc.Append(", ");
+                        dsc.Append(Lang.Get(keyValuePair.Key.ToString()) + " " + keyValuePair.Value.ToString("#.#") +
+                                   "x");
+                        ++num2;
+                    }
+                }
+
+                dsc.Append("\n");
+            }
+
+            if (GetAttackPower(itemstack) > 0.5)
+            {
+                dsc.AppendLine(Lang.Get("Attack power: -{0} hp",
+                    (object)this.GetAttackPower(itemstack).ToString("0.#")));
+                dsc.AppendLine(Lang.Get("Attack tier: {0}", ToolTier));
+            }
+
+            if (GetAttackRange(itemstack) > (double)GlobalConstants.DefaultAttackRange)
+                dsc.AppendLine(Lang.Get("Attack range: {0} m",
+                    GetAttackRange(itemstack).ToString("0.#")));
+            
+            if (str1.Length > 0 && dsc.Length > 0)
+                dsc.Append("\n");
+            dsc.Append(str1);
+        }
+
         public override SkillItem[] GetToolModes(ItemSlot slot, IClientPlayer forPlayer, BlockSelection blockSel)
         {
             return _toolModes;
@@ -129,7 +222,7 @@ namespace TemporalProspector
             }
         }
 
-        protected virtual void ProspectArea(IWorldAccessor world, Entity byEntity, BlockSelection blockSel, int radius)
+        protected virtual void ProspectArea(IWorldAccessor world, Entity byEntity, BlockSelection blockSel, int radius, String resourceType)
         {
             IPlayer byPlayer = null;
             if (byEntity is EntityPlayer player)
@@ -146,7 +239,6 @@ namespace TemporalProspector
             }
 
             BlockPos blockPos = blockSel.Position.Copy();
-            string resourceType = Variant["resource"];
             int numFound = 0;
 
             api.World.BlockAccessor.WalkBlocks(blockPos.AddCopy(radius, radius, radius),
@@ -164,8 +256,9 @@ namespace TemporalProspector
                     }
                 });
 
-            serverPlayer.SendMessage(GlobalConstants.GeneralChatGroup,
-                "Found " + numFound + " " + resourceType + " nodes within " + radius + " blocks", EnumChatType.Notification);
+            string msg = Lang.Get("temporalprospector:found-" + resourceType + "-nodes-within-radius", 
+                numFound, radius);
+            serverPlayer.SendMessage(GlobalConstants.GeneralChatGroup, msg, EnumChatType.Notification);
         }
         
         private void SpawnParticles(IWorldAccessor world, Vec3d pos, Vec3d endPos)
@@ -182,7 +275,7 @@ namespace TemporalProspector
             world.SpawnParticles(_particlesHeld);
         }
 
-        private void DrawCircle(Context cr, int x, int y, float width, float height, double[] rgba, double scale)
+        private static void DrawCircle(Context cr, int x, int y, float width, float height, double[] rgba, double scale)
         {
             cr.SetSourceRGB(rgba[0], rgba[1], rgba[2]);
             cr.Translate(24, 24);

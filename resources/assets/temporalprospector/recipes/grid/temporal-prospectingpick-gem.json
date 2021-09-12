@@ -1,27 +1,51 @@
-{
-  ingredientPattern: "TGP",
-  ingredients: {
-    "T": {
-      type: "item",
-      code: "game:gear-temporal"
+[
+  {
+    ingredientPattern: "TGP",
+    ingredients: {
+      "T": {
+        type: "item",
+        code: "game:gear-temporal"
+      },
+      "G": {
+        type: "item",
+        code: "game:gem-*-rough",
+        quantity: 2
+      },
+      "P": {
+        type: "item",
+        code: "game:prospectingpick-*",
+        name: "pick"
+      }
     },
-    "G": {
+    width: 1,
+    height: 3,
+    output: {
       type: "item",
-      code: "game:gem-*-rough",
-      name: "gem",
-      quantity: 2
-    },
-    "P": {
-      type: "item",
-      code: "game:prospectingpick-*",
-      name: "pick"
+      code: "temporalprospectingpick-{pick}",
+      quantity: 1
     }
   },
-  width: 1,
-  height: 3,
-  output: {
-    type: "item",
-    code: "temporalprospectingpick-gem-{pick}-{gem}",
-    quantity: 1
+  {
+    ingredientPattern: "GP",
+    ingredients: {
+      "G": {
+        type: "item",
+        code: "game:gem-*-rough",
+        quantity: 2
+      },
+      "P": {
+        type: "item",
+        code: "temporalprospectingpick-*",
+        name: "pick"
+      }
+    },
+    width: 1,
+    height: 2,
+    shapeless: true,
+    output: {
+      type: "item",
+      code: "temporalprospectingpick-{pick}",
+      quantity: 1
+    }
   }
-}
+]
