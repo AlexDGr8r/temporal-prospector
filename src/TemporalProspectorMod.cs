@@ -1,8 +1,8 @@
 ﻿using Vintagestory.API.Common;
 
 [assembly: ModInfo( "TemporalProspector",
-	Description = "An example mod using VS Code and .NET",
-	Website     = "https://github.com/copygirl/howto-example-mod",
+	Description = "Temporally prospect the resources of the world",
+	Website     = "https://github.com/AlexDGr8r/temporal-prospector",
 	Authors     = new []{ "AlexDGr8r" } )]
 
 namespace TemporalProspector
