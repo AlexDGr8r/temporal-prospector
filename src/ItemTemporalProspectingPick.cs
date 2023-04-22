@@ -160,7 +160,7 @@ namespace TemporalProspector
 
             stringBuilder1.Append(str2);
             dsc.Append(withDebugInfo ? "Code: " + Code + "\n" : "");
-            int durability = GetDurability(itemstack);
+            int durability = GetMaxDurability(itemstack);
             if (durability > 1)
                 dsc.AppendLine(Lang.Get("Durability: {0} / {1}",
                     itemstack.Attributes.GetInt("durability", durability), durability));
@@ -243,13 +243,14 @@ namespace TemporalProspector
 
             api.World.BlockAccessor.WalkBlocks(blockPos.AddCopy(radius, radius, radius),
                 blockPos.AddCopy(-radius, -radius, -radius),
-                (nblock, bp) =>
+                (nblock, ix, iy, iz) =>
                 {
                     if (nblock.BlockMaterial == EnumBlockMaterial.Ore && nblock.Variant.ContainsKey("type"))
                     {
                         if (nblock.Variant["type"].ToLower().Contains(resourceType))
                         {
                             numFound++;
+                            BlockPos bp = new BlockPos(ix, iy, iz);
                             SpawnParticles(world, blockPos.ToVec3d().Add(0.5D, 0.5D, 0.5D),
                                 bp.ToVec3d().Add(0.5D, 0.5D, 0.5D));
                         }
