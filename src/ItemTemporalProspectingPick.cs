@@ -18,13 +18,9 @@ namespace TemporalProspector
 
         private const string RESOURCE_TAG = "resource";
 
-        private SimpleParticleProperties _particlesHeld;
         private SkillItem[] _toolModes;
-
-        public override void OnLoaded(ICoreAPI api)
-        {
-            base.OnLoaded(api);
-            _particlesHeld = new SimpleParticleProperties(1f, 1f, ColorUtil.ToRgba(50, 220, 220, 220), 
+		
+        private SimpleParticleProperties _particlesHeld = new SimpleParticleProperties(1f, 1f, ColorUtil.ToRgba(50, 220, 220, 220), 
                 new Vec3d(), new Vec3d(), new Vec3f(), 
                 new Vec3f(), 4f, 0.0f, 0.5f, 0.75f)
             {
@@ -35,7 +31,11 @@ namespace TemporalProspector
                 VertexFlags = 220,
                 SelfPropelled = true
             };
-            
+			
+        public override void OnLoaded(ICoreAPI api)
+        {
+            base.OnLoaded(api);
+			
             _toolModes = ObjectCacheUtil.GetOrCreate(api, "temporalPickToolModes", () =>
             {
                 SkillItem[] skillItemArray = {
@@ -124,6 +124,7 @@ namespace TemporalProspector
                     case ItemNugget _:
                     case ItemOre _:
                     case ItemGem _:
+					case ItemCoal _:
                         outputSlot.Itemstack.Attributes.SetString(RESOURCE_TAG, iSlot.Itemstack.Item.Variant["ore"]);
                         break;
                 }

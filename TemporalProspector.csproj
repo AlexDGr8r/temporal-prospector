@@ -1,6 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFramework>net461</TargetFramework>
+		<TargetFramework>net8.0</TargetFramework>
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+		<GenerateDependencyFile>false</GenerateDependencyFile>
 		<RootNamespace>TemporalProspector</RootNamespace>
 	</PropertyGroup>
 	
@@ -9,11 +11,11 @@
 			<HintPath>$(VINTAGE_STORY)/VintagestoryAPI.dll</HintPath>
 			<Private>false</Private>
 		</Reference>
-		<Reference Include="VintagestoryAPI">
+		<Reference Include="VSEssentials">
 			<HintPath>$(VINTAGE_STORY)/Mods/VSEssentials.dll</HintPath>
 			<Private>false</Private>
 		</Reference>
-		<Reference Include="VintagestoryAPI">
+		<Reference Include="VSSurvivalMod">
 			<HintPath>$(VINTAGE_STORY)/Mods/VSSurvivalMod.dll</HintPath>
 			<Private>false</Private>
 		</Reference>
