@@ -8,7 +8,7 @@
 	"textures": {
 		"string": "game:item/tool/material/string",
 		"metal": "game:block/metal/ingot/copper",
-		"handle": "game:item/tool/material/wood",
+		"handle": "game:item/tool/handle",
 		"temporal": "game:item/resource/temporalgear",
 		"nugget": "game:item/resource/temporalgear"
 	},
