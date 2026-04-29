@@ -17,9 +17,13 @@ namespace TemporalProspector
     {
 
         private const string RESOURCE_TAG = "resource";
+        private const int MAX_PARTICLE_TARGETS = 64;
+        private static readonly HashSet<string> StoneResources = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
+        {
+            "chalk", "halite", "limestone"
+        };
 
         private SkillItem[] _toolModes;
-		
         private SimpleParticleProperties _particlesHeld = new SimpleParticleProperties(1f, 1f, ColorUtil.ToRgba(50, 220, 220, 220), 
                 new Vec3d(), new Vec3d(), new Vec3f(), 
                 new Vec3f(), 4f, 0.0f, 0.5f, 0.75f)
@@ -31,11 +35,11 @@ namespace TemporalProspector
                 VertexFlags = 220,
                 SelfPropelled = true
             };
-			
+
         public override void OnLoaded(ICoreAPI api)
         {
             base.OnLoaded(api);
-			
+
             _toolModes = ObjectCacheUtil.GetOrCreate(api, "temporalPickToolModes", () =>
             {
                 SkillItem[] skillItemArray = {
@@ -53,16 +57,23 @@ namespace TemporalProspector
                     {
                         Code = new AssetLocation("longradius"),
                         Name = Lang.Get("temporalprospector:temporal-prospecting-longradius")
+                    },
+                    new SkillItem
+                    {
+                        Code = new AssetLocation("extralongradius"),
+                        Name = Lang.Get("temporalprospector:temporal-prospecting-extralongradius")
                     }
                 };
 
                 if (api is ICoreClientAPI capi)
                 {
                     skillItemArray[0].WithIcon(capi, (cr, x, y, w, h, rgba) => 
-                        DrawCircle(cr, x, y, w, h, rgba, 1D / 3D));
+                        DrawCircle(cr, x, y, w, h, rgba, 1D / 4D));
                     skillItemArray[1].WithIcon(capi, (cr, x, y, w, h, rgba) => 
-                        DrawCircle(cr, x, y, w, h, rgba, 2D / 3D));
+                        DrawCircle(cr, x, y, w, h, rgba, 2D / 4D));
                     skillItemArray[2].WithIcon(capi, (cr, x, y, w, h, rgba) => 
+                        DrawCircle(cr, x, y, w, h, rgba, 3D / 4D));
+                    skillItemArray[3].WithIcon(capi, (cr, x, y, w, h, rgba) =>
                         DrawCircle(cr, x, y, w, h, rgba, 1));
                 }
 
@@ -79,8 +90,11 @@ namespace TemporalProspector
                 case 1: // Medium radius
                     radius = 30;
                     break;
-                case 2: // Long radius
+                case 2: // Large radius
                     radius = 60;
+                    break;
+                case 3: // Extra Large radius
+                    radius = 90;
                     break;
             }
 
@@ -124,8 +138,11 @@ namespace TemporalProspector
                     case ItemNugget _:
                     case ItemOre _:
                     case ItemGem _:
-					case ItemCoal _:
+                    case ItemCoal _:
                         outputSlot.Itemstack.Attributes.SetString(RESOURCE_TAG, iSlot.Itemstack.Item.Variant["ore"]);
+                        break;
+                    case ItemStone _:
+                        outputSlot.Itemstack.Attributes.SetString(RESOURCE_TAG, iSlot.Itemstack.Item.Variant["rock"]);
                         break;
                 }
             }
@@ -223,7 +240,7 @@ namespace TemporalProspector
             }
         }
 
-        protected virtual void ProspectArea(IWorldAccessor world, Entity byEntity, BlockSelection blockSel, int radius, String resourceType)
+        protected virtual void ProspectArea(IWorldAccessor world, Entity byEntity, BlockSelection blockSel, int radius, string resourceType)
         {
             IPlayer byPlayer = null;
             if (byEntity is EntityPlayer player)
@@ -246,11 +263,13 @@ namespace TemporalProspector
                 blockPos.AddCopy(-radius, -radius, -radius),
                 (nblock, ix, iy, iz) =>
                 {
-                    if (nblock.BlockMaterial == EnumBlockMaterial.Ore && nblock.Variant.ContainsKey("type"))
+                    if (IsMatchingResource(nblock, resourceType))
                     {
-                        if (nblock.Variant["type"].ToLower().Contains(resourceType))
+                        numFound++;
+
+                        // Cap the number of particles so stone scans don't flood the game.
+                        if (numFound <= MAX_PARTICLE_TARGETS)
                         {
-                            numFound++;
                             BlockPos bp = new BlockPos(ix, iy, iz);
                             SpawnParticles(world, blockPos.ToVec3d().Add(0.5D, 0.5D, 0.5D),
                                 bp.ToVec3d().Add(0.5D, 0.5D, 0.5D));
@@ -261,6 +280,27 @@ namespace TemporalProspector
             string msg = Lang.Get("temporalprospector:found-" + resourceType + "-nodes-within-radius", 
                 numFound, radius);
             serverPlayer.SendMessage(GlobalConstants.GeneralChatGroup, msg, EnumChatType.Notification);
+        }
+
+        private static bool IsMatchingResource(Block block, string resourceType)
+        {
+            return StoneResources.Contains(resourceType)
+                ? IsMatchingStoneBlock(block, resourceType)
+                : IsMatchingOreBlock(block, resourceType);
+        }
+
+        private static bool IsMatchingOreBlock(Block block, string resourceType)
+        {
+            return block.BlockMaterial == EnumBlockMaterial.Ore &&
+                   block.Variant.ContainsKey("type") &&
+                   block.Variant["type"].IndexOf(resourceType, StringComparison.OrdinalIgnoreCase) >= 0;
+        }
+
+        private static bool IsMatchingStoneBlock(Block block, string resourceType)
+        {
+            return block.Code.Path.StartsWith("rock") &&
+                   block.Variant.ContainsKey("rock") &&
+                   string.Equals(block.Variant["rock"], resourceType, StringComparison.OrdinalIgnoreCase);
         }
         
         private void SpawnParticles(IWorldAccessor world, Vec3d pos, Vec3d endPos)

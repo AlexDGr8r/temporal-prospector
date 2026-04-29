@@ -1,17 +1,22 @@
 [
   {
-    "ingredientPattern": "TNP",
+    "ingredientPattern": "TSP",
     "ingredients": {
       "T": {
         "type": "item",
         "code": "game:gear-temporal",
         "name": "gear"
       },
-      "N": {
+      "S": {
         "type": "item",
-        "code": "game:nugget-*",
-        "name": "nugget",
-        "quantity": 10
+        "code": "game:stone-*",
+        "name": "rock",
+        "quantity": 10,
+        "allowedVariants": [
+          "chalk",
+          "halite",
+          "limestone"
+        ]
       },
       "P": {
         "type": "item",
@@ -28,13 +33,18 @@
     }
   },
   {
-    "ingredientPattern": "NP",
+    "ingredientPattern": "SP",
     "ingredients": {
-      "N": {
+      "S": {
         "type": "item",
-        "code": "game:nugget-*",
-        "name": "nugget",
-        "quantity": 10
+        "code": "game:stone-*",
+        "name": "rock",
+        "quantity": 10,
+        "allowedVariants": [
+          "chalk",
+          "halite",
+          "limestone"
+        ]
       },
       "P": {
         "type": "item",
