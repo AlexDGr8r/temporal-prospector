@@ -1,30 +1,30 @@
 ﻿{
-  code: "temporalprospectingpick",
-  storageFlags: 5,
-  class: "ItemTemporalProspectingPick",
-  attributes: {
-    handbook: {
-      groupBy: [
+  "code": "temporalprospectingpick",
+  "storageFlags": 5,
+  "class": "ItemTemporalProspectingPick",
+  "attributes": {
+    "handbook": {
+      "groupBy": [
         "prospectingpick-*"
       ]
     },
-    toolrackTransform: {
-      rotation: {
-        y: 1,
-        z: -1
+    "toolrackTransform": {
+      "rotation": {
+        "y": 1,
+        "z": -1
       },
-      translation: {
-        x: -0.3,
-        y: 0.6
+      "translation": {
+        "x": -0.3,
+        "y": 0.6
       },
-      scale: 1.25
+      "scale": 1.25
     },
-    slotRefillIdentifier: "propick"
+    "slotRefillIdentifier": "propick"
   },
-  variantgroups: [
+  "variantgroups": [
     {
-      code: "metal",
-      states: [
+      "code": "metal",
+      "states": [
         "copper",
         "tinbronze",
         "bismuthbronze",
@@ -37,23 +37,23 @@
       ]
     }
   ],
-  tool: "pickaxe",
-  damagedby: [
+  "tool": "pickaxe",
+  "damagedby": [
     "blockbreaking",
     "attacking"
   ],
-  shape: {
-    base: "item/tool/temporal-prospectingpick"
+  "shape": {
+    "base": "item/tool/temporal-prospectingpick"
   },
-  heldTpHitAnimation: "breaktool",
-  texturesByType: {
+  "heldTpHitAnimation": "breaktool",
+  "texturesByType": {
     "*": {
       "metal": {
-        base: "game:block/metal/ingot/{metal}"
+        "base": "game:block/metal/ingot/{metal}"
       }
     }
   },
-  tooltierbytype: {
+  "tooltierbytype": {
     "temporalprospectingpick-stone": 1,
     "temporalprospectingpick-copper": 2,
     "temporalprospectingpick-gold": 2,
@@ -65,7 +65,7 @@
     "temporalprospectingpick-meteoriciron": 4,
     "temporalprospectingpick-steel": 5
   },
-  miningspeedbytype: {
+  "miningspeedbytype": {
     "temporalprospectingpick-copper": {
       "stone": 2.5,
       "ore": 2.5
@@ -105,7 +105,7 @@
       "ore": 5.5
     }
   },
-  attackpowerbytype: {
+  "attackpowerbytype": {
     "temporalprospectingpick-copper": 1.25,
     "temporalprospectingpick-bismuthbronze": 1.5,
     "temporalprospectingpick-tinbronze": 1.75,
@@ -116,7 +116,7 @@
     "temporalprospectingpick-meteoriciron": 2.35,
     "temporalprospectingpick-steel": 2.5
   },
-  durabilitybytype: {
+  "durabilitybytype": {
     "temporalprospectingpick-gold": 60,
     "temporalprospectingpick-silver": 80,
     "temporalprospectingpick-copper": 150,
@@ -127,7 +127,7 @@
     "temporalprospectingpick-meteoriciron": 900,
     "temporalprospectingpick-steel": 1625
   },
-  creativeinventory: {
+  "creativeinventory": {
     "general": [
       "*"
     ],
@@ -138,66 +138,66 @@
       "*"
     ]
   },
-  fpHandTransform: {
-    translation: {
-      x: 0.046875,
-      y: 0,
-      z: 0
+  "fpHandTransform": {
+    "translation": {
+      "x": 0.046875,
+      "y": 0,
+      "z": 0
     },
-    rotation: {
-      x: 15,
-      y: 15,
-      z: 90
+    "rotation": {
+      "x": 15,
+      "y": 15,
+      "z": 90
     },
-    scale: 2.5
+    "scale": 2.5
   },
-  guiTransform: {
-    translation: {
-      x: 0,
-      y: 0,
-      z: 0
+  "guiTransform": {
+    "translation": {
+      "x": 0,
+      "y": 0,
+      "z": 0
     },
-    rotation: {
-      x: 107,
-      y: -58,
-      z: -16
+    "rotation": {
+      "x": 107,
+      "y": -58,
+      "z": -16
     },
-    origin: {
-      x: 0.44,
-      y: 0.3,
-      z: 0.42
+    "origin": {
+      "x": 0.44,
+      "y": 0.3,
+      "z": 0.42
     },
-    scale: 1.68
+    "scale": 1.68
   },
-  groundTransform: {
-    translation: {
-      x: 0.3,
-      y: 0.4,
-      z: -0.2
+  "groundTransform": {
+    "translation": {
+      "x": 0.3,
+      "y": 0.4,
+      "z": -0.2
     },
-    rotation: {
-      x: 0,
-      y: 0,
-      z: 0
+    "rotation": {
+      "x": 0,
+      "y": 0,
+      "z": 0
     },
-    origin: {
-      x: 0.5,
-      y: 0.45,
-      z: 0.5
+    "origin": {
+      "x": 0.5,
+      "y": 0.45,
+      "z": 0.5
     },
-    scale: 3.6
+    "scale": 3.6
   },
-  tpHandTransform: {
-    translation: {
-      x: -0.77,
-      y: -0.5,
-      z: -0.08
+  "tpHandTransform": {
+    "translation": {
+      "x": -0.77,
+      "y": -0.5,
+      "z": -0.08
     },
-    rotation: {
-      x: 90,
-      y: 0,
-      z: -10
+    "rotation": {
+      "x": 90,
+      "y": 0,
+      "z": -10
     },
-    scale: 1
+    "scale": 1
   }
 }
