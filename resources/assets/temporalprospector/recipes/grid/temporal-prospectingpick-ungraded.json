@@ -1,16 +1,18 @@
 [
   {
-    ingredientPattern: "TUP",
-    ingredients: {
+    "ingredientPattern": "TUP",
+    "ingredients": {
       "T": {
-        type: "item",
-        code: "game:gear-temporal"
+        "type": "item",
+        "code": "game:gear-temporal",
+        "name": "gear"
       },
       "U": {
-        type: "item",
-        code: "game:ore-*",
-        quantity: 4,
-        allowedVariants: [
+        "type": "item",
+        "code": "game:ore-*",
+        "name": "ore",
+        "quantity": 4,
+        "allowedVariants": [
           "alum",
           "lapislazuli",
           "corundum",
@@ -28,27 +30,28 @@
         ]
       },
       "P": {
-        type: "item",
-        code: "game:prospectingpick-*",
-        name: "pick"
+        "type": "item",
+        "code": "game:prospectingpick-*",
+        "name": "pick"
       }
     },
-    width: 1,
-    height: 3,
-    output: {
-      type: "item",
-      code: "temporalprospectingpick-{pick}",
-      quantity: 1
+    "width": 1,
+    "height": 3,
+    "output": {
+      "type": "item",
+      "code": "temporalprospectingpick-{pick}",
+      "quantity": 1
     }
   },
   {
-    ingredientPattern: "UP",
-    ingredients: {
+    "ingredientPattern": "UP",
+    "ingredients": {
       "U": {
-        type: "item",
-        code: "game:ore-*",
-        quantity: 4,
-        allowedVariants: [
+        "type": "item",
+        "code": "game:ore-*",
+        "name": "ore",
+        "quantity": 4,
+        "allowedVariants": [
           "alum",
           "lapislazuli",
           "corundum",
@@ -66,18 +69,18 @@
         ]
       },
       "P": {
-        type: "item",
-        code: "temporalprospectingpick-*",
-        name: "pick"
+        "type": "item",
+        "code": "temporalprospectingpick-*",
+        "name": "pick"
       }
     },
-    width: 1,
-    height: 2,
-    shapeless: true,
-    output: {
-      type: "item",
-      code: "temporalprospectingpick-{pick}",
-      quantity: 1
+    "width": 1,
+    "height": 2,
+    "shapeless": true,
+    "output": {
+      "type": "item",
+      "code": "temporalprospectingpick-{pick}",
+      "quantity": 1
     }
   }
 ]

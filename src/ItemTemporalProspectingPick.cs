@@ -17,11 +17,14 @@ namespace TemporalProspector
     {
 
         private const string RESOURCE_TAG = "resource";
+        private static readonly HashSet<string> StoneResources = new(StringComparer.OrdinalIgnoreCase)
+        {
+            "chalk", "halite", "limestone"
+        };
 
         private SkillItem[] _toolModes;
-		
-        private SimpleParticleProperties _particlesHeld = new SimpleParticleProperties(1f, 1f, ColorUtil.ToRgba(50, 220, 220, 220), 
-                new Vec3d(), new Vec3d(), new Vec3f(), 
+        private SimpleParticleProperties _particlesHeld = new(1f, 1f, ColorUtil.ToRgba(50, 220, 220, 220),
+                new Vec3d(), new Vec3d(), new Vec3f(),
                 new Vec3f(), 4f, 0.0f, 0.5f, 0.75f)
             {
                 SizeEvolve = EvolvingNatFloat.create(EnumTransformFunction.QUADRATIC, -0.6f),
@@ -31,14 +34,14 @@ namespace TemporalProspector
                 VertexFlags = 220,
                 SelfPropelled = true
             };
-			
+
         public override void OnLoaded(ICoreAPI api)
         {
             base.OnLoaded(api);
-			
+
             _toolModes = ObjectCacheUtil.GetOrCreate(api, "temporalPickToolModes", () =>
             {
-                SkillItem[] skillItemArray = {
+                SkillItem[] skillItemArray = [
                     new SkillItem
                     {
                         Code = new AssetLocation("shortradius"),
@@ -53,16 +56,23 @@ namespace TemporalProspector
                     {
                         Code = new AssetLocation("longradius"),
                         Name = Lang.Get("temporalprospector:temporal-prospecting-longradius")
+                    },
+                    new SkillItem
+                    {
+                        Code = new AssetLocation("extralongradius"),
+                        Name = Lang.Get("temporalprospector:temporal-prospecting-extralongradius")
                     }
-                };
+                ];
 
                 if (api is ICoreClientAPI capi)
                 {
                     skillItemArray[0].WithIcon(capi, (cr, x, y, w, h, rgba) => 
-                        DrawCircle(cr, x, y, w, h, rgba, 1D / 3D));
+                        DrawCircle(cr, x, y, w, h, rgba, 1D / 4D));
                     skillItemArray[1].WithIcon(capi, (cr, x, y, w, h, rgba) => 
-                        DrawCircle(cr, x, y, w, h, rgba, 2D / 3D));
+                        DrawCircle(cr, x, y, w, h, rgba, 2D / 4D));
                     skillItemArray[2].WithIcon(capi, (cr, x, y, w, h, rgba) => 
+                        DrawCircle(cr, x, y, w, h, rgba, 3D / 4D));
+                    skillItemArray[3].WithIcon(capi, (cr, x, y, w, h, rgba) =>
                         DrawCircle(cr, x, y, w, h, rgba, 1));
                 }
 
@@ -73,16 +83,7 @@ namespace TemporalProspector
         public override bool OnBlockBrokenWith(IWorldAccessor world, Entity byEntity, ItemSlot itemslot,
             BlockSelection blockSel, float dropQuantityMultiplier = 1f)
         {
-            var radius = 15; // short radius
-            switch (GetToolMode(itemslot, null, blockSel))
-            {
-                case 1: // Medium radius
-                    radius = 30;
-                    break;
-                case 2: // Long radius
-                    radius = 60;
-                    break;
-            }
+            int radius = TemporalProspectorMod.GetConfiguredSearchRadius(GetToolMode(itemslot, null, blockSel));
 
             string resource = itemslot.Itemstack.Attributes.GetString(RESOURCE_TAG);
             if (resource != null)
@@ -101,7 +102,7 @@ namespace TemporalProspector
 
             if (DamagedBy != null && DamagedBy.Contains(EnumItemDamageSource.BlockBreaking))
             {
-                DamageItem(world, byEntity, itemslot, radius / 3);
+                DamageItem(world, byEntity, itemslot, TemporalProspectorMod.GetConfiguredDurabilityCost(radius));
             }
 
             return true;
@@ -124,8 +125,11 @@ namespace TemporalProspector
                     case ItemNugget _:
                     case ItemOre _:
                     case ItemGem _:
-					case ItemCoal _:
+                    case ItemCoal _:
                         outputSlot.Itemstack.Attributes.SetString(RESOURCE_TAG, iSlot.Itemstack.Item.Variant["ore"]);
+                        break;
+                    case ItemStone _:
+                        outputSlot.Itemstack.Attributes.SetString(RESOURCE_TAG, iSlot.Itemstack.Item.Variant["rock"]);
                         break;
                 }
             }
@@ -164,7 +168,7 @@ namespace TemporalProspector
             int durability = GetMaxDurability(itemstack);
             if (durability > 1)
                 dsc.AppendLine(Lang.Get("Durability: {0} / {1}",
-                    itemstack.Attributes.GetInt("durability", durability), durability));
+                    GetDisplayDurability(itemstack, durability), durability));
             if (MiningSpeed != null && MiningSpeed.Count > 0)
             {
                 dsc.AppendLine(Lang.Get("Tool Tier: {0}", ToolTier));
@@ -182,7 +186,7 @@ namespace TemporalProspector
                     }
                 }
 
-                dsc.Append("\n");
+                dsc.Append('\n');
             }
 
             if (GetAttackPower(itemstack) > 0.5)
@@ -197,13 +201,33 @@ namespace TemporalProspector
                     GetAttackRange(itemstack).ToString("0.#")));
             
             if (str1.Length > 0 && dsc.Length > 0)
-                dsc.Append("\n");
+                dsc.Append('\n');
             dsc.Append(str1);
         }
 
         public override SkillItem[] GetToolModes(ItemSlot slot, IClientPlayer forPlayer, BlockSelection blockSel)
         {
             return _toolModes;
+        }
+
+        public override int GetMaxDurability(ItemStack itemstack)
+        {
+            return TemporalProspectorMod.GetConfiguredDurability(Code?.Path, base.GetMaxDurability(itemstack));
+        }
+
+        public override void DamageItem(IWorldAccessor world, Entity byEntity, ItemSlot itemSlot, int amount = 1,
+            bool destroyOnZeroDurability = true)
+        {
+            // Handle if max durability has changed via a config change.
+            ClampRemainingDurability(itemSlot?.Itemstack);
+
+            base.DamageItem(world, byEntity, itemSlot, amount, destroyOnZeroDurability);
+        }
+
+        public override bool ShouldDisplayItemDamage(ItemStack itemstack)
+        {
+            int maxDurability = GetMaxDurability(itemstack);
+            return maxDurability > 1 && GetDisplayDurability(itemstack, maxDurability) != maxDurability;
         }
 
         public override int GetToolMode(ItemSlot slot, IPlayer byPlayer, BlockSelection blockSel) => 
@@ -223,7 +247,7 @@ namespace TemporalProspector
             }
         }
 
-        protected virtual void ProspectArea(IWorldAccessor world, Entity byEntity, BlockSelection blockSel, int radius, String resourceType)
+        protected virtual void ProspectArea(IWorldAccessor world, Entity byEntity, BlockSelection blockSel, int radius, string resourceType)
         {
             IPlayer byPlayer = null;
             if (byEntity is EntityPlayer player)
@@ -234,9 +258,9 @@ namespace TemporalProspector
             Block block = world.BlockAccessor.GetBlock(blockSel.Position);
             block.OnBlockBroken(world, blockSel.Position, byPlayer, 0.0f);
             if (!block.Code.Path.StartsWith("rock") && !block.Code.Path.StartsWith("ore") ||
-                !(byPlayer is IServerPlayer serverPlayer))
+                byPlayer is not IServerPlayer serverPlayer)
             {
-                return;
+                return; 
             }
 
             BlockPos blockPos = blockSel.Position.Copy();
@@ -246,21 +270,66 @@ namespace TemporalProspector
                 blockPos.AddCopy(-radius, -radius, -radius),
                 (nblock, ix, iy, iz) =>
                 {
-                    if (nblock.BlockMaterial == EnumBlockMaterial.Ore && nblock.Variant.ContainsKey("type"))
+                    if (IsMatchingResource(nblock, resourceType))
                     {
-                        if (nblock.Variant["type"].ToLower().Contains(resourceType))
+                        numFound++;
+
+                        // Cap the number of particles so stone scans don't flood the game.
+                        if (TemporalProspectorMod.MaxParticleTargets == 0 ||
+                            numFound <= TemporalProspectorMod.MaxParticleTargets)
                         {
-                            numFound++;
-                            BlockPos bp = new BlockPos(ix, iy, iz);
+                            BlockPos bp = new(ix, iy, iz);
                             SpawnParticles(world, blockPos.ToVec3d().Add(0.5D, 0.5D, 0.5D),
                                 bp.ToVec3d().Add(0.5D, 0.5D, 0.5D));
                         }
                     }
-                });
+                }, true); // WalkBlocks centerOrder = true
+                          // "If true, the blocks will be ordered by the distance to the center position"
 
             string msg = Lang.Get("temporalprospector:found-" + resourceType + "-nodes-within-radius", 
                 numFound, radius);
             serverPlayer.SendMessage(GlobalConstants.GeneralChatGroup, msg, EnumChatType.Notification);
+        }
+
+        private static bool IsMatchingResource(Block block, string resourceType)
+        {
+            return StoneResources.Contains(resourceType)
+                ? IsMatchingStoneBlock(block, resourceType)
+                : IsMatchingOreBlock(block, resourceType);
+        }
+
+        private static bool IsMatchingOreBlock(Block block, string resourceType)
+        {
+            return block.BlockMaterial == EnumBlockMaterial.Ore &&
+                   block.Variant.ContainsKey("type") &&
+                   block.Variant["type"].Contains(resourceType, StringComparison.OrdinalIgnoreCase);
+        }
+
+        private static bool IsMatchingStoneBlock(Block block, string resourceType)
+        {
+            return block.Code.Path.StartsWith("rock") &&
+                   block.Variant.ContainsKey("rock") &&
+                   string.Equals(block.Variant["rock"], resourceType, StringComparison.OrdinalIgnoreCase);
+        }
+
+        private static int GetDisplayDurability(ItemStack itemstack, int maxDurability)
+        {
+            return Math.Min(itemstack.Attributes.GetInt("durability", maxDurability), maxDurability);
+        }
+
+        private void ClampRemainingDurability(ItemStack itemstack)
+        {
+            if (itemstack == null)
+            {
+                return;
+            }
+
+            int maxDurability = GetMaxDurability(itemstack);
+            int currentDurability = itemstack.Attributes.GetInt("durability", maxDurability);
+            if (currentDurability > maxDurability)
+            {
+                SetDurability(itemstack, maxDurability);
+            }
         }
         
         private void SpawnParticles(IWorldAccessor world, Vec3d pos, Vec3d endPos)

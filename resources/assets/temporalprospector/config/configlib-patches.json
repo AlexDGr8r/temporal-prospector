@@ -1,0 +1,191 @@
+{
+  "version": 0,
+  "file": "TemporalProspectorConfig.json",
+  "patches": {},
+  "settings": [
+    {
+      "type": "separator",
+      "title": "ParticleSettings"
+    },
+    {
+      "code": "MaxParticleTargets",
+      "comment": "MaxParticleTargetsComment",
+      "type": "integer",
+      "default": 128,
+      "range": {
+        "min": 0,
+        "max": 512
+      }
+    },
+    {
+      "type": "separator",
+      "title": "RadiusSettings"
+    },
+    {
+      "code": "ShortSearchRadius",
+      "comment": "ShortSearchRadiusComment",
+      "type": "integer",
+      "default": 15,
+      "range": {
+        "min": 1,
+        "max": 512
+      }
+    },
+    {
+      "code": "MediumSearchRadius",
+      "comment": "MediumSearchRadiusComment",
+      "type": "integer",
+      "default": 30,
+      "range": {
+        "min": 1,
+        "max": 512
+      }
+    },
+    {
+      "code": "LongSearchRadius",
+      "comment": "LongSearchRadiusComment",
+      "type": "integer",
+      "default": 60,
+      "range": {
+        "min": 1,
+        "max": 512
+      }
+    },
+    {
+      "code": "ExtraLongSearchRadius",
+      "comment": "ExtraLongSearchRadiusComment",
+      "type": "integer",
+      "default": 90,
+      "range": {
+        "min": 1,
+        "max": 512
+      }
+    },
+    {
+      "type": "separator",
+      "title": "RecipeSettings"
+    },
+    {
+      "code": "EnableChalkRecipe",
+      "comment": "EnableChalkRecipeComment",
+      "type": "boolean",
+      "default": true
+    },
+    {
+      "code": "EnableHaliteRecipe",
+      "comment": "EnableHaliteRecipeComment",
+      "type": "boolean",
+      "default": true
+    },
+    {
+      "code": "EnableLimestoneRecipe",
+      "comment": "EnableLimestoneRecipeComment",
+      "type": "boolean",
+      "default": true
+    },
+    {
+      "type": "separator",
+      "title": "DurabilitySettings"
+    },
+    {
+      "code": "DurabilityCostPercent",
+      "comment": "DurabilityCostPercentComment",
+      "type": "float",
+      "default": 33,
+      "range": {
+        "min": 0.0,
+        "max": 1000.0
+      }
+    },
+    {
+      "code": "CopperDurability",
+      "comment": "CopperDurabilityComment",
+      "type": "integer",
+      "default": 150,
+      "range": {
+        "min": 1,
+        "max": 100000
+      }
+    },
+    {
+      "code": "TinBronzeDurability",
+      "comment": "TinBronzeDurabilityComment",
+      "type": "integer",
+      "default": 250,
+      "range": {
+        "min": 1,
+        "max": 100000
+      }
+    },
+    {
+      "code": "BismuthBronzeDurability",
+      "comment": "BismuthBronzeDurabilityComment",
+      "type": "integer",
+      "default": 300,
+      "range": {
+        "min": 1,
+        "max": 100000
+      }
+    },
+    {
+      "code": "BlackBronzeDurability",
+      "comment": "BlackBronzeDurabilityComment",
+      "type": "integer",
+      "default": 350,
+      "range": {
+        "min": 1,
+        "max": 100000
+      }
+    },
+    {
+      "code": "GoldDurability",
+      "comment": "GoldDurabilityComment",
+      "type": "integer",
+      "default": 60,
+      "range": {
+        "min": 1,
+        "max": 100000
+      }
+    },
+    {
+      "code": "SilverDurability",
+      "comment": "SilverDurabilityComment",
+      "type": "integer",
+      "default": 80,
+      "range": {
+        "min": 1,
+        "max": 100000
+      }
+    },
+    {
+      "code": "IronDurability",
+      "comment": "IronDurabilityComment",
+      "type": "integer",
+      "default": 650,
+      "range": {
+        "min": 1,
+        "max": 100000
+      }
+    },
+    {
+      "code": "MeteoricIronDurability",
+      "comment": "MeteoricIronDurabilityComment",
+      "type": "integer",
+      "default": 900,
+      "range": {
+        "min": 1,
+        "max": 100000
+      }
+    },
+    {
+      "code": "SteelDurability",
+      "comment": "SteelDurabilityComment",
+      "type": "integer",
+      "default": 1625,
+      "range": {
+        "min": 1,
+        "max": 100000
+      }
+    }
+  ]
+}
